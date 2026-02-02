@@ -35,9 +35,9 @@ const Nav: React.FC = () => {
 		const web3 = new Web3(window.ethereum);
 		const tokenContractAddress = import.meta.env.VITE_TOKEN_CA;
 		const tokenContract = new web3.eth.Contract(tokenABI, tokenContractAddress);
-
+		const decimals = await tokenContract.methods.decimals().call();
 		const tokenBalance: any = await tokenContract.methods.balanceOf(data.address).call();
-		const formattedBalance = web3.utils.fromWei(tokenBalance, "ether"); // Convert from Wei to Ether for readability
+		const formattedBalance = (Number(tokenBalance) / (10 ** Number(decimals))).toString(); // Convert from Wei to Ether for readability
 		setBalance(Number(formattedBalance));
 	}
 

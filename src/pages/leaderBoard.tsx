@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import Web3 from "web3";
 import Spinner from "../components/Spinner";
-import tokenABI from "../utils/abis/token.json";
 import contractABI from '../utils/abis/stakingContract.json';
 import { useState } from "react";
 import Alert from "../components/Alert";
@@ -35,7 +34,6 @@ const LeaderboardTable = () => {
     });
     const [loading, setLoading] = useState(false);
     const contractAddress = import.meta.env.VITE_STAKE_CA;
-    const tokenContractAddress = import.meta.env.VITE_TOKEN_CA;
     const { data } = useWalletContext();
     const [positions, setPositions] = useState<Position[]>([]);
     const navigate = useNavigate();

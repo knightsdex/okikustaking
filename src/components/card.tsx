@@ -120,8 +120,8 @@ const StakingCard: React.FC = () => {
             const tokenContract = new web3.eth.Contract(tokenABI, tokenContractAddress);
 
             const tokenBalance: any = await tokenContract.methods.balanceOf(data.address).call();
-            // const decimals = await tokenContract.methods.decimals().call();
-            const formattedBalance = web3.utils.fromWei(tokenBalance, "ether");
+            const decimals = await tokenContract.methods.decimals().call();
+            const formattedBalance = (Number(tokenBalance) / (10 ** Number(decimals))).toString();
             setBalance(formattedBalance);
             const positionCount: any = await stakingContract.methods.numPositions(data.address).call();
             setposCount(positionCount)
@@ -133,14 +133,14 @@ const StakingCard: React.FC = () => {
                     let reward = "0";
                     try {
                         const rawReward: any = await stakingContract.methods.calculateReward(data.address, pos[0]).call();
-                        reward = web3.utils.fromWei(rawReward, "ether");
+                        reward = (Number(rawReward) / (10 ** Number(decimals))).toString();
                     } catch (error) {
                         console.error(`Error calculating reward for position ${pos[0]}:`, error);
                     }
 
                     return {
                         id: pos[0].toString(),
-                        amount: web3.utils.fromWei(pos[1], "ether"),
+                        amount: (Number(pos[1]) / (10 ** Number(decimals))).toString(),
                         startTime: pos[2].toString(),
                         endTime: pos[3].toString(),
                         numDays: pos[4].toString(),
@@ -218,7 +218,8 @@ const StakingCard: React.FC = () => {
 
             const stakingContract = new web3.eth.Contract(contractABI, contractAddress);
             const tokenContract = new web3.eth.Contract(tokenABI, tokenContractAddress);
-            const stakeAmount = web3.utils.toWei(amount, "ether");
+            const decimals = await tokenContract.methods.decimals().call();
+            const stakeAmount = (Number(amount) * (10 ** Number(decimals))).toString();
 
             // Approve the staking contract to spend tokens
             const approvalTx = await tokenContract.methods.approve(contractAddress, stakeAmount).send({ from: account });

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Web3 from "web3";
 import Spinner from "../components/Spinner";
+import tokenABI from "../utils/abis/token.json";
 import contractABI from '../utils/abis/stakingContract.json';
 import { useState } from "react";
 import Alert from "../components/Alert";
@@ -34,6 +35,7 @@ const LeaderboardTable = () => {
     });
     const [loading, setLoading] = useState(false);
     const contractAddress = import.meta.env.VITE_STAKE_CA;
+    const tokenContractAddress = import.meta.env.VITE_TOKEN_CA;
     const { data } = useWalletContext();
     const [positions, setPositions] = useState<Position[]>([]);
     const navigate = useNavigate();
@@ -125,21 +127,23 @@ const LeaderboardTable = () => {
             setLoading(true);
             const web3 = new Web3(window.ethereum);
             const stakingContract = new web3.eth.Contract(contractABI, contractAddress);
+            const tokenContract = new web3.eth.Contract(tokenABI, tokenContractAddress);
             const allPositions: any = await stakingContract.methods.getAllPositions(data.address).call();
+            const decimals = await tokenContract.methods.decimals().call();
             const formattedPositions: Position[] = await Promise.all(
                 allPositions.map(async (pos: any) => {
                     // Calculate reward for this specific position using position id
                     let reward = "0";
                     try {
                         const rawReward: any = await stakingContract.methods.calculateReward(data.address, pos[0]).call();
-                        reward = web3.utils.fromWei(rawReward, 'ether');
+                        reward = (Number(rawReward) / (10 ** Number(decimals))).toString();
                     } catch (error) {
                         console.error(`Error calculating reward for position ${pos[0]}:`, error);
                     }
 
                     return {
                         id: pos[0].toString(),
-                        amount: web3.utils.fromWei(pos[1].toString(), "ether"),
+                        amount: (Number(pos[1]) / (10 ** Number(decimals))).toString(),
                         startTime: pos[2].toString(),
                         endTime: pos[3].toString(),
                         numDays: pos[4].toString(),

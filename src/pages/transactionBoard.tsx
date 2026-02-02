@@ -130,7 +130,7 @@
 //                                     >
 //                                         <span className="md:w-2/12 w-2/12">
 //                                             <a 
-//                                                 href={`https://sepolia.etherscan.io/tx/${tx.transactionHash}`} 
+//                                                 href={`https://etherscan.io/tx/${tx.transactionHash}`} 
 //                                                 target="_blank" 
 //                                                 rel="noopener noreferrer"
 //                                                 className="text-blue-400 hover:text-blue-300 hover:underline"
@@ -171,7 +171,7 @@
 //                                         <div className="flex justify-between items-center">
 //                                             <span className="text-primary font-semibold">Txn Hash</span>
 //                                             <a 
-//                                                 href={`https://sepolia.etherscan.io/tx/${tx.transactionHash}`} 
+//                                                 href={`https://etherscan.io/tx/${tx.transactionHash}`} 
 //                                                 target="_blank" 
 //                                                 rel="noopener noreferrer"
 //                                                 className="text-blue-400 hover:text-blue-300 text-sm"
@@ -376,7 +376,7 @@ const TransactionModal: React.FC<ModalProps> = ({ isOpen, onClose, userAddress, 
                                             <tr key={stake.id} className="border-b border-light-border hover:bg-opacity-10 hover:bg-white">
                                                 <td className="py-4 px-4 text-center">
                                                     <a
-                                                        href={`https://sepolia.etherscan.io/tx/${stake.transactionHash}`}
+                                                        href={`https://etherscan.io/tx/${stake.transactionHash}`}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="text-blue-400 hover:text-blue-300 hover:underline"
@@ -388,15 +388,15 @@ const TransactionModal: React.FC<ModalProps> = ({ isOpen, onClose, userAddress, 
                                                     {formatAge(stake.timestamp)}
                                                 </td>
                                                 <td className="py-4 px-4 text-center text-light">
-                                                    {formatAmount(Number(stake.amount) / 10 ** 18)}
+                                                    {formatAmount(Number(stake.amount) / 10 ** 9)}
                                                 </td>
                                                 <td className="py-4 px-4 text-center text-green-400 font-semibold">
-                                                    {Number(stake.reward) === 0 ? '-' : formatAmount(Number(stake.reward) / 10 ** 18)}
+                                                    {Number(stake.reward) === 0 ? '-' : formatAmount(Number(stake.reward) / 10 ** 9)}
                                                 </td>
                                                 <td className="py-4 px-4 text-center">
                                                     {stake.isWithdrawn ? (
                                                         <a
-                                                            href={`https://sepolia.etherscan.io/tx/${stake.withdrawnTxHash}`}
+                                                            href={`https://etherscan.io/tx/${stake.withdrawnTxHash}`}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             className="px-3 py-1 rounded-full text-xs font-semibold bg-red-400 bg-opacity-20 text-red-400 hover:text-red-300 underline inline-block"
@@ -422,7 +422,7 @@ const TransactionModal: React.FC<ModalProps> = ({ isOpen, onClose, userAddress, 
                                         <div className="flex justify-between">
                                             <span className="text-primary font-semibold">Txn Hash</span>
                                             <a
-                                                href={`https://sepolia.etherscan.io/tx/${stake.transactionHash}`}
+                                                href={`https://etherscan.io/tx/${stake.transactionHash}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="text-blue-400 hover:text-blue-300 text-sm"
@@ -437,20 +437,20 @@ const TransactionModal: React.FC<ModalProps> = ({ isOpen, onClose, userAddress, 
                                         <div className="flex justify-between">
                                             <span className="text-primary font-semibold">Amount</span>
                                             <span className="text-light">
-                                                {formatAmount(Number(stake.amount) / 10 ** 18)} OKIKU
+                                                {formatAmount(Number(stake.amount) / 10 ** 9)} OKIKU
                                             </span>
                                         </div>
                                         <div className="flex justify-between">
                                             <span className="text-primary font-semibold">Reward</span>
                                             <span className="text-green-400 font-semibold">
-                                                {Number(stake.reward) === 0 ? '-' : `${formatAmount(Number(stake.reward) / 10 ** 18)} OKIKU`}
+                                                {Number(stake.reward) === 0 ? '-' : `${formatAmount(Number(stake.reward) / 10 ** 9)} OKIKU`}
                                             </span>
                                         </div>
                                         <div className="flex justify-between">
                                             <span className="text-primary font-semibold">Status</span>
                                             {stake.isWithdrawn ? (
                                                 <a
-                                                    href={`https://sepolia.etherscan.io/tx/${stake.withdrawnTxHash}`}
+                                                    href={`https://etherscan.io/tx/${stake.withdrawnTxHash}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="px-3 py-1 rounded-full text-xs font-semibold bg-gray-500 bg-opacity-20 text-gray-400 hover:text-gray-300 hover:underline"
@@ -632,7 +632,7 @@ const TransactionTable = () => {
                                         {user.address.slice(0, 10)}...{user.address.slice(-8)}
                                     </span>
                                     <span className="w-[12%] text-center font-semibold">
-                                        {formatAmount(user.totalStaked / 10 ** 18)}
+                                        {formatAmount(user.totalStaked / 10 ** 9)}
                                     </span>
                                     <span className="w-[10%] text-center font-semibold">
                                         {user.stakeCount}
@@ -644,7 +644,7 @@ const TransactionTable = () => {
                                         {user.withdrawnCount}
                                     </span>
                                     <span className="w-[18%] text-center text-green-400 font-semibold">
-                                        {formatAmount(user.totalReward / 10 ** 18)} OKIKU
+                                        {formatAmount(user.totalReward / 10 ** 9)} OKIKU
                                     </span>
                                 </div>
                             ))}
@@ -679,7 +679,7 @@ const TransactionTable = () => {
                                     <div className="flex justify-between items-center">
                                         <span className="text-primary font-semibold">Total Reward</span>
                                         <span className="text-green-400 font-semibold">
-                                            {formatAmount(user.totalReward / 10 ** 18)} OKIKU
+                                            {formatAmount(user.totalReward / 10 ** 9)} OKIKU
                                         </span>
                                     </div>
                                 </div>

@@ -4,7 +4,6 @@ import { shortNumber } from "../pages/leaderBoard";
 import { ConnectWalletButton } from "../utils/lib/connect-button";
 import { useWalletContext } from "../utils/context/walletContext";
 import avatar1 from '../assets/img/08/svg-export-1x.png';
-import avatar2 from '../assets/img/08/svg-export-2x.png';
 const InfoCard = ({ disabled, label, value, stakeAction, viewDetail, balance, showPositions }: any) => {
 
     const { data } = useWalletContext();
@@ -60,21 +59,12 @@ const InfoCard = ({ disabled, label, value, stakeAction, viewDetail, balance, sh
                     <div className={`font-bold ${label === 'position' ? 'text-[#004450] text-3xl' : 'text-[#004450] dark:text-[#FCA311] text-3xl'}`}>{(label === 'position' && (!data.address || !balance)) ? 'Stake OKIKU' : shortNumber(Number(value === '-' ? 0 : value)) + 'OKIKU'}</div>
                     <div className={`text-sm font-semibold ${label === 'position' ? 'text-black' : 'text-light'}`}>{label === 'stake' || label == 'canstake' ? '' : shortNumber((Number(value === '-' ? 0 : value))) + ' Positions'}</div>
                 </div>
-                {label === 'stake' && (
+                {label === 'position' && (
                     <div className="absolute right-8 md:right-32 top-1/2 -translate-y-1/2">
                         <img 
                             src={avatar1} 
                             alt="avatar" 
                             className="w-24 h-24 md:w-32 md:h-48 object-cover opacity-80"
-                        />
-                    </div>
-                )}
-                {label === 'position' && (
-                    <div className="absolute right-8 md:right-32 top-1/2 -translate-y-1/2">
-                        <img 
-                            src={avatar2} 
-                            alt="avatar" 
-                            className="w-24 h-24 md:w-32 md:h-48 opacity-80"
                         />
                     </div>
                 )}

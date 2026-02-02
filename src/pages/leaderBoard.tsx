@@ -127,9 +127,8 @@ const LeaderboardTable = () => {
             setLoading(true);
             const web3 = new Web3(window.ethereum);
             const stakingContract = new web3.eth.Contract(contractABI, contractAddress);
-            const tokenContract = new web3.eth.Contract(tokenABI, tokenContractAddress);
             const allPositions: any = await stakingContract.methods.getAllPositions(data.address).call();
-            const decimals = await tokenContract.methods.decimals().call();
+            const decimals = 9;
             const formattedPositions: Position[] = await Promise.all(
                 allPositions.map(async (pos: any) => {
                     // Calculate reward for this specific position using position id

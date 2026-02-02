@@ -120,7 +120,7 @@ const StakingCard: React.FC = () => {
             const tokenContract = new web3.eth.Contract(tokenABI, tokenContractAddress);
 
             const tokenBalance: any = await tokenContract.methods.balanceOf(data.address).call();
-            const decimals = await tokenContract.methods.decimals().call();
+            const decimals = 9;
             const formattedBalance = (Number(tokenBalance) / (10 ** Number(decimals))).toString();
             setBalance(formattedBalance);
             const positionCount: any = await stakingContract.methods.numPositions(data.address).call();
@@ -218,7 +218,7 @@ const StakingCard: React.FC = () => {
 
             const stakingContract = new web3.eth.Contract(contractABI, contractAddress);
             const tokenContract = new web3.eth.Contract(tokenABI, tokenContractAddress);
-            const decimals = await tokenContract.methods.decimals().call();
+            const decimals = 9;
             const stakeAmount = (Number(amount) * (10 ** Number(decimals))).toString();
 
             // Approve the staking contract to spend tokens
